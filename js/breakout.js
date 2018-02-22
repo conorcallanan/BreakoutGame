@@ -20,20 +20,25 @@ function drawBall() {
 }
 
 function draw() {
-	ctx.clearRect(0,0,canvas.width,canvas.height);
+	ctx.clearRect(0,0,480,320);
 	drawBall();
 	x += dx;
 	y += dy;
 	
-	if(y + dy > canvas.height-ballRadius || y+dy < 0) {
+	//making ball bounce and change colour
+	if(y + dy >= 320 || y+dy <= 0) {
 		dy = -dy;
+		ctx.fillStyle ="red";
+		ctx.fill();
 	}
 	
-	if(x + dx > canvas.width-ballRadius || x+dx < 0) {
+	if(x + dx == 470 || x+dx <= ballRadius) {
 		dx = -dx;
+		ctx.fillStyle = "red";
+		ctx.fill();
 	}
 }
 
 //calls draw function every 10ms
-setInterval(draw,10);
+setInterval(draw,50);
 
