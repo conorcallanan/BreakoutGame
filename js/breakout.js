@@ -43,7 +43,7 @@ function draw() {
 	x += dx;
 	y += dy;
 	
-	//making ball bounce and change colour
+	//making ball bounce
 	if(y + dy > canvas.height-ballRadius || y+dy < ballRadius) {
 		dy = -dy;
 		
@@ -54,10 +54,10 @@ function draw() {
 	}
 	
 	if(rightPressed && paddleX < canvas.width-paddleWidth) {
-		paddleX += 7;
+		paddleX += 2;
 	}
 	else if(leftPressed && paddleX > 0) {
-		paddleX -= 7;
+		paddleX -= 2;
 	}
 }
 
