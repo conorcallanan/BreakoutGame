@@ -9,10 +9,10 @@ var paddleWidth = 75;
 var paddleX = (canvas.width-paddleWidth)/2;
 
 //bricks setup
-var brickRowCount = 7;
-var brickColumnCount = 6;
-var brickWidth = 60;
-var brickHeight = 10;
+var brickRowCount = 3;
+var brickColumnCount = 5;
+var brickWidth = 75;
+var brickHeight = 20;
 var brickPadding = 10;
 var brickOffsetTop = 30;
 var brickOffsetLeft = 30;
@@ -73,6 +73,7 @@ function draw() {
 	ctx.clearRect(0,0,canvas.width,canvas.height);
 	drawBall();
 	drawPaddle();
+	collisionDetect();
 	drawBricks();
 	x += dx;
 	y += dy;
@@ -125,7 +126,16 @@ function keyUpHandler(e) {
 	}
 }
 
-
+function collisionDetect() {
+	for(c=0; c<brickColumnCount; c++) {
+		for(r=0; r<brickRowCount; r++) {
+			var b = bricks[c][r];
+			if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) {
+				dy = -dy;
+			}
+		}
+	}
+}
 
 //calls draw function every 10ms
 setInterval(draw,15);
