@@ -36,6 +36,7 @@ for(c=0; c<brickColumnCount; c++) {
 }
 
 var score = 0;
+var lives = 3;
 
 //sounds
 var winningSound = new Audio('sounds/woohoo.wav');
@@ -84,6 +85,7 @@ function draw() {
 	drawBall();
 	drawPaddle();
 	drawScore();
+	drawLives();
 	collisionDetect();
 	drawBricks();
 	x += dx;
@@ -101,16 +103,27 @@ function draw() {
 		if(x > paddleX && x < paddleX + paddleWidth) {
 			dy = -dy;
 		}
-		else{
-			gameOverSound.play();
-			alert("GAME OVER");
-			document.location.reload();
-		}
-	}	
+		//decrease lives
+				else {
+					lives--;
+					if(!lives) {
+					gameOverSound.play();
+					alert("Game Over");
+					document.location.reload();
+				}
+				else {
+					x = canvas.width/2;
+					y = canvas.height-30;
+					dx = 2;
+					dy = -2;
+					paddleX = (canvas.width-paddleWidth)/2;
+				}
+			}
+		}	
 		if(rightPressed && paddleX < canvas.width-paddleWidth) {
 		paddleX += 4;
-	}
-	else if(leftPressed && paddleX > 0) {
+		}
+		else if(leftPressed && paddleX > 0) {
 		paddleX -= 4;
 	}
 }
@@ -164,6 +177,14 @@ function drawScore() {
 	ctx.fillText("Score: "+score, 8, 20);
 	document.getElementById("gamescore").innerHTML = "Score: " + score;
 }
+
+function drawLives() {
+	ctx.font = "16px Ariel";
+	ctx.fillStyle = "#0095DD";
+	ctx.fillText("Lives: "+lives, canvas.width-65, 20);
+	document.getElementById("gamelives").innerHTML = "Lives: "+lives;
+}
+
 function mouseMoveHandler(e) {
 	var relativeX = e.clientX - canvas.offsetLeft;
 	if(relativeX > 0 && relativeX < canvas.width) {
